@@ -1,39 +1,69 @@
 const fs = require('fs');
 
 class ProductManager {
-  constructor(filename) {
-    this.filename = filename;
+  constructor(path) {
+    this.path = path;
   }
 
-  async getAll(limit) {
-    const content = await this._readFile();
-    let products = JSON.parse(content);
+  addProduct(product) {
+    const products = this.getProducts();
 
-    if (limit) {
-      products = products.slice(0, limit);
+    // Asignar un id autoincrementable al producto.
+    const lastId = products.length > 0 ? products[products.length - 1].id : 0;
+    const newProduct = { ...product, id: lastId + 1 };
+
+    // Agregar el producto al array de productos y escribirlo en el archivo.
+    products.push(newProduct);
+    this.writeProducts(products);
+
+    return newProduct;
+  }
+
+  getProducts() {
+    try {
+      const products = fs.readFileSync(this.path, 'utf-8');
+      return JSON.parse(products);
+    } catch (err) {
+      // Si el archivo no existe o hay algún error al leerlo, devolver un array vacío.
+      return [];
     }
-
-    return products;
   }
 
-  async getById(id) {
-    const content = await this._readFile();
-    const products = JSON.parse(content);
+  getProductById(id) {
+    const products = this.getProducts();
     const product = products.find(p => p.id === id);
 
-    return product;
+    if (product) {
+      return product;
+    } else {
+      throw new Error('Product not found');
+    }
   }
 
-  async _readFile() {
-    return new Promise((resolve, reject) => {
-      fs.readFile(this.filename, 'utf8', (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
+  updateProduct(id, updatedFields) {
+    const products = this.getProducts();
+    const productIndex = products.findIndex(p => p.id === id);
+
+    if (productIndex >= 0) {
+      const updatedProduct = { ...products[productIndex], ...updatedFields };
+      products[productIndex] = updatedProduct;
+      this.writeProducts(products);
+
+      return updatedProduct;
+    } else {
+      throw new Error('Product not found');
+    }
+  }
+
+  deleteProduct(id) {
+    const products = this.getProducts();
+    const filteredProducts = products.filter(p => p.id !== id);
+    this.writeProducts(filteredProducts);
+  }
+
+  writeProducts(products) {
+    const productsString = JSON.stringify(products);
+    fs.writeFileSync(this.path, productsString);
   }
 }
 
