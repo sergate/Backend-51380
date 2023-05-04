@@ -2,9 +2,10 @@
   "name": "backend-51380",
   "version": "1.0.0",
   "description": "",
-  "main": "ProductManager.js",
+  "main": "app.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon ./scr/app.js"
   },
   "repository": {
     "type": "git",
