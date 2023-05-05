@@ -6,8 +6,8 @@ class ProductManager {
   }
 
   addProduct = async(product) => {
-    if (fs.existsSync(`${this.path}productos.json`)) { // Si el archivo existe, se lee y añade el dato
-        let objects = await JSON.parse(fs.readFileSync(`${this.path}productos.json`, "utf-8"));
+    if (fs.existsSync(`${this.path}dataBase.json`)) { // Si el archivo existe, se lee y añade el dato
+        let objects = await JSON.parse(fs.readFileSync(`${this.path}dataBase.json`, "utf-8"));
         let lastProduct = await objects.pop()
         objects.push(lastProduct);
         product.id = await lastProduct.id+1;
@@ -15,14 +15,14 @@ class ProductManager {
         objects.push(product);
 
         objects = JSON.stringify(objects);
-        fs.writeFileSync(`${this.path}productos.json`, objects);
+        fs.writeFileSync(`${this.path}dataBase.json`, objects);
         return 'Product added';
     } else { // Si no existe, se crea con el producto directamente
         product.id = 0;
         let objects = [product];
 
         objects = JSON.stringify(objects);
-        fs.writeFileSync(`${this.path}productos.json`, objects);
+        fs.writeFileSync(`${this.path}dataBase.json`, objects);
         return 'Product added';
     }
   }
@@ -54,8 +54,8 @@ class ProductManager {
   }
 
   updateProduct = async(id, upProduct) => {
-    if (fs.existsSync(`${this.path}productos.json`)) {
-        let objects = await JSON.parse(fs.readFileSync(`${this.path}productos.json`));
+    if (fs.existsSync(`${this.path}dataBase.json`)) {
+        let objects = await JSON.parse(fs.readFileSync(`${this.path}dataBase.json`));
 
         let idToSearch = (element) => element.id === id;
         let position = await objects.findIndex(idToSearch);
@@ -77,7 +77,7 @@ class ProductManager {
             objects.splice(position, 1, product);
 
             objects = JSON.stringify(objects);
-            fs.writeFileSync(`${this.path}productos.json`, objects);
+            fs.writeFileSync(`${this.path}dataBase.json`, objects);
 
             return product;
         }
@@ -87,8 +87,8 @@ class ProductManager {
   }
 
   deleteProduct = async(id) => {
-    if (fs.existsSync(`${this.path}productos.json`)) {
-        let objects = await JSON.parse(fs.readFileSync(`${this.path}productos.json`));
+    if (fs.existsSync(`${this.path}dataBase.json`)) {
+        let objects = await JSON.parse(fs.readFileSync(`${this.path}dataBase.json`));
 
         let idToSearch = (element) => element.id === id;
         let position = await objects.findIndex(idToSearch);
@@ -98,10 +98,10 @@ class ProductManager {
         } else {
             objects.splice(position, 1);
             if (objects.length == 0) {
-                fs.unlinkSync(`${this.path}productos.json`, objects);
+                fs.unlinkSync(`${this.path}dataBase.json`, objects);
             } else {
                 objects = JSON.stringify(objects);
-                fs.writeFileSync(`${this.path}productos.json`, objects);
+                fs.writeFileSync(`${this.path}dataBase.json`, objects);
             }
             return 'Product has been deleted'
         }

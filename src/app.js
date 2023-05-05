@@ -9,7 +9,7 @@ app.use(express.urlencoded({extended:true}));
 app.listen(8080, () => 
     console.log("Servicio arriba en el puerto 8080"));
 
-app.get("/products", async(req, res) => { // http://localhost:8080/products?limit=3
+app.get("/products", async(req, res) => {
     let consultas = req.query;
     
     let array = await pm.getProducts();
@@ -23,7 +23,7 @@ app.get("/products", async(req, res) => { // http://localhost:8080/products?limi
 
 })
 
-app.get("/products/:pid", async(req, res) => { // http://localhost:8080/products/1
+app.get("/products/:pid", async(req, res) => {
     let pid = req.params.pid;
     pid = parseInt(pid);
     
