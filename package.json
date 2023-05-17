@@ -1,0 +1,32 @@
+{
+  "name": "backend-51380",
+  "version": "1.0.0",
+  "description": "Coderhouse Backend 2023",
+  "main": "products.js",
+  "engines": {
+    "node": "16.x"
+  },
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gglibaak/backend-51380.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gglibaak/backend-51380/issues"
+  },
+  "homepage": "https://github.com/gglibaak/backend-51380#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "socket.io": "^4.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
