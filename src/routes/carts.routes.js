@@ -50,6 +50,7 @@ router.put('/:cid/product/:pid', async(req, res) => {
 })
 
 router.delete('/:cid/product/:pid', async(req, res) => {
+    const id = req.params.cid;
     let productId = req.params.pid;
 
     let productExist = await pm.getOne(productId);
