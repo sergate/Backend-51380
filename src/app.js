@@ -1,5 +1,5 @@
 import express from 'express';
-import {__dirname} from './utils.js';
+import __dirname from './utils.js';
 import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 

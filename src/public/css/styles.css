@@ -46,6 +46,7 @@ h1 {
     border-radius: 10px;
     background-color: rgb(41, 41, 41);
     padding: 5px;
+    text-decoration: none;
 }
 
 .product img {
@@ -104,4 +105,43 @@ button {
     aspect-ratio: 1/1;
     border: 3px solid rgb(144, 206, 0);
     border-radius: 50%;
+}
+
+.movementDiv {
+    margin-top: 30px;
+    display: grid;
+    width: 20%;
+    grid-template-columns: 40% 40%;
+    column-gap: 20%;
+    grid-template-areas: "prev next";
+}
+
+.movementLink {
+    height: fit-content;
+    padding: 10px;
+    border: 3px solid rgb(114, 163, 0);
+    background-color: rgb(63, 63, 63);
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    gap: 10px;
+    padding: 15px;
+    border: 3px solid rgb(144, 206, 0);
+    border-radius: 25px;
+}
+
+.form input {
+    padding: 5px;
+    color: black;
+    outline: none;
+}
+
+.submit {
+    height: 30px;
+    border-radius: 25px;
 }

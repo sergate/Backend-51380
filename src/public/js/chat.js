@@ -1,5 +1,5 @@
 const socket = io();
-const chatBox = document.getElementById('chatBox');
+const chatBox = document.getElementById('chatBox'); // No es estrictamente necesario
 
 Swal.fire({
     background: 'rgb(20,20,20)',
