@@ -5,8 +5,8 @@ class ProductManager {
         this.path = path;
     }
 
-    addProduct = async(product) => {
-        if (fs.existsSync(`${this.path}productos.json`)) { 
+    addProduct = async(product) => { // Funciona
+        if (fs.existsSync(`${this.path}productos.json`)) { // Si el archivo existe, se lee y añade el dato
             let objects = await JSON.parse(fs.readFileSync(`${this.path}productos.json`, "utf-8"));
             let lastProduct = await objects.pop()
             objects.push(lastProduct);
@@ -17,7 +17,7 @@ class ProductManager {
             objects = JSON.stringify(objects);
             fs.writeFileSync(`${this.path}productos.json`, objects);
             return 'Product added';
-        } else {
+        } else { // Si no existe, se crea con el producto directamente
             product.id = 0;
             let objects = [product];
     
@@ -27,17 +27,17 @@ class ProductManager {
         }
     }
 
-    getProducts = async() => {
-        if (fs.existsSync(`${this.path}productos.json`)) { 
+    getProducts = async() => { // Funciona
+        if (fs.existsSync(`${this.path}productos.json`)) { // Si el archivo existe, se lee y añade el dato
             const objects = await JSON.parse(fs.readFileSync(`${this.path}productos.json`, "utf-8"));
             return objects;
 
-        } else { 
+        } else { // Si no existe, se crea el archivo con el producto directamente
             return false;
         }
     }
 
-    getProductById = async(id) => { 
+    getProductById = async(id) => { // Funciona
         if (fs.existsSync(`${this.path}productos.json`)) {
             const objects = await JSON.parse(fs.readFileSync(`${this.path}productos.json`));
 
@@ -53,7 +53,7 @@ class ProductManager {
         }
     }
 
-    updateProduct = async(id, upProduct) => { 
+    updateProduct = async(id, upProduct) => { // Funciona
         if (fs.existsSync(`${this.path}productos.json`)) {
             let objects = await JSON.parse(fs.readFileSync(`${this.path}productos.json`));
 
@@ -86,7 +86,7 @@ class ProductManager {
         }
     }
 
-    deleteProduct = async(id) => {
+    deleteProduct = async(id) => { // Funciona
         if (fs.existsSync(`${this.path}productos.json`)) {
             let objects = await JSON.parse(fs.readFileSync(`${this.path}productos.json`));
 

@@ -11,7 +11,7 @@ export default class Cart {
     }
 
     getOne = async(id) => {
-        let cart = await cartModel.findOne({_id: id});
+        let cart = await cartModel.findOne({_id: id}).populate('products._id').lean();
         return cart;
     }
 
@@ -26,7 +26,9 @@ export default class Cart {
     }
 
     deleteCart = async(id) => {
-        let result = await cartModel.deleteOne({_id: id});
+        let cart = await cartModel.findOne({_id: id}).lean();
+        cart.products = [];
+        let result = await cartModel.updateOne({_id: id}, cart);
         return result;
     }
 }

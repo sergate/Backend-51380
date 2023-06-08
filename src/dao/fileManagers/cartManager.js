@@ -5,9 +5,9 @@ class CartManager {
         this.path = path;
     }
 
-    addCart = async() => {
+    addCart = async() => { // Funciona
         let newCartId = 0;
-        if (fs.existsSync(`${this.path}carrito.json`)) {
+        if (fs.existsSync(`${this.path}carrito.json`)) { // Si el archivo existe, se lee y añade el dato
             let carts = await JSON.parse(fs.readFileSync(`${this.path}carrito.json`, "utf-8"));
             let lastCart = await carts.pop()
             carts.push(lastCart);
@@ -24,7 +24,7 @@ class CartManager {
             carts = JSON.stringify(carts);
             fs.writeFileSync(`${this.path}carrito.json`, carts);
 
-        } else {
+        } else { // Si no existe, se crea con el carrito directamente
             let cart = {
                 id: 0,
                 objects: []
@@ -38,21 +38,21 @@ class CartManager {
         return `Tu carrito tiene la ID ${newCartId}`;
     }
 
-    getCartById = async(id) => {
-        if (fs.existsSync(`${this.path}carrito.json`)) { 
+    getCartById = async(id) => { // Funciona
+        if (fs.existsSync(`${this.path}carrito.json`)) { // Si el archivo existe, se lee y añade el dato
             let carts = await JSON.parse(fs.readFileSync(`${this.path}carrito.json`, "utf-8"));
             let cart = carts.find(element => element.id == id);
             if (cart == undefined) {
                 return 'No se encuentra ningun carrito con ese ID';
             } else {
-                return cart; 
+                return cart; // No retornar cart.objects porque [] == false
             }
         } else {
             return false
         }
     }
 
-    addProductToCart = async(cartId, productId) => { 
+    addProductToCart = async(cartId, productId) => { // Funciona
         if (fs.existsSync(`${this.path}carrito.json`) && fs.existsSync(`${this.path}productos.json`)) {
             let carts = await JSON.parse(fs.readFileSync(`${this.path}carrito.json`, "utf-8"));
             let cart = carts.find(element => element.id == cartId);
@@ -64,7 +64,7 @@ class CartManager {
                 let product = products.find(element => element.id == productId);
                 if (product == undefined) {
                     return 'No se encuentra ningun producto con ese ID';
-                } else { 
+                } else { // Si encuentra el producto en el array entonces += 1, caso contrario, lo crea
                     let idToSearch = (element) => element.id === productId;
                     let position = await cart.objects.findIndex(idToSearch);
                 

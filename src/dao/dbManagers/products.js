@@ -10,6 +10,13 @@ export default class Product {
         return products.map(product => product.toObject());
     }
 
+    getDeterminate = async(limit, page, query, sort) => { // Funciona
+        (query != undefined) ? query = JSON.parse(query) : query = {};
+        let products = await productsModel.paginate(query, {limit: limit, page: page, sort: {price:sort}, lean: true});
+        
+        return products;
+    }
+
     getOne = async(id) => {
         let product = await productsModel.findOne({_id: id});
         return product;
