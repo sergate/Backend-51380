@@ -1,6 +1,14 @@
 <link rel="stylesheet" href="css/styles.css">
 <header>
-    <h1>CoderChat</h1>
+    <a href="/">Home</a>
+  <h1>CoderChat</h1>
+  <div>
+    {{#if isLogin}}
+      <a href="/user">Bienvenido {{user.first_name}} {{user.last_name}}</a>
+    {{else}}
+      <a href="/login">Inicia sesión aquí</a>
+    {{/if}}
+  </div>
 </header>
 <main>
     <div id="chatZone">

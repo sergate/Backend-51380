@@ -2,11 +2,14 @@ import express from 'express';
 import __dirname from './utils.js';
 import mongoose from 'mongoose';
 import { Server } from 'socket.io';
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 import cartRouter from './routes/carts.routes.js';
 import productRouter from './routes/products.routes.js';
 import viewsRouter from './routes/views.routes.js';
 import messageRouter from './routes/messages.routes.js';
+import sessionRouter from './routes/session.routes.js';
 
 import handlebars from 'express-handlebars';
 
@@ -22,6 +25,18 @@ const port = 8080;
 
 const connection = mongoose.connect('mongodb+srv://silco30:Alvlgeddl10@mongodbcoder51380.3ccany0.mongodb.net/ecommerce?retryWrites=true&w=majority');
 
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: 'mongodb+srv://silco30:Alvlgeddl10@mongodbcoder51380.3ccany0.mongodb.net/ecommerce?retryWrites=true&w=majority',
+        mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+        ttl: 3000
+    }),
+    secret: "secretCoder",
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
+    resave: false,
+    saveUnitialized: true
+}))
+
 app.engine('handlebars', handlebars.engine());
 app.set("views", __dirname+"/views");
 app.set("view engine", 'handlebars');
@@ -34,6 +49,7 @@ app.use(express.urlencoded({extended: true}));
 app.use('/api/carts', cartRouter);
 app.use('/api/products', productRouter);
 app.use('/api/messages', messageRouter);
+app.use('/api/session', sessionRouter);
 
 const httpServer = app.listen(port, () => console.log(`Server listening on port ${port}`));
 export const io = new Server(httpServer);
