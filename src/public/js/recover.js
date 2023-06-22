@@ -1,4 +1,4 @@
-const form = document.getElementById("loginForm");
+const form = document.getElementById("recoverForm");
 
 form.addEventListener('submit', event => {
 
@@ -11,17 +11,11 @@ form.addEventListener('submit', event => {
         object[key] = value;
     })
     
-    fetch('/api/session/login', {
+    fetch('/api/session/recover', {
         method: 'POST',
         body: JSON.stringify(object),
         headers: {
             'Content-type': 'application/json'
         }
-    }).then(result => {
-        let response = result;
-        console.log(response)
-        if (response.redirected) {
-            location.replace('/')
-        }
-    })
+    }).then(result => result.json()).then(json => console.log(json));
 })
