@@ -8,18 +8,23 @@ import passport from "passport";
 import initPassport from "./config/passport.config.js"
 
 import viewsRouter from "./routes/views.routes.js";
-import sessionRouter from "./routes/session.routes.js";;
+import sessionRouter from "./routes/session.routes.js";
+
+import dotenv from 'dotenv';
+dotenv.config();
 
 mongoose.set("strictQuery", false); // Quita el warning
 
 const app = express();
 const port = 8080;
 
-const connection = mongoose.connect('mongodb+srv://silco30:Alvlgeddl10@mongodbcoder51380.3ccany0.mongodb.net/ecommerce?retryWrites=true&w=majority');
+const { MONGO_URL } = process.env;
+
+mongoose.connect(MONGO_URL);
 
 app.use(session({
     store: MongoStore.create({
-        mongoUrl:'mongodb+srv://silco30:Alvlgeddl10@mongodbcoder51380.3ccany0.mongodb.net/ecommerce?retryWrites=true&w=majority',
+        mongoUrl: MONGO_URL,
         mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
         ttl: 3000
     }),

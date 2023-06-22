@@ -6,6 +6,7 @@ import userService from 'passport-github2';
 import dotenv from "dotenv";
 dotenv.config();
 
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
 const localStrategy = local.Strategy;
 const initPassport = () => {
 
@@ -19,11 +20,10 @@ const initPassport = () => {
     });
 
     passport.use('github', new userService({
-        clientID: "47bf90fd528dcb3ddd5d",
-        clientSecret: "9ca962d8892c794db56e42d0689ddf4847b3bb23",
+        clientID: GITHUB_CLIENT_ID,
+        clientSecret: GITHUB_CLIENT_SECRET,
         callbackURL: "http://localhost:8080/api/session/githubcallback"
     }, async(req, accessToken, refreshToken, profile, done) => {
-        // let {password = "10"} = req.body;
         let password = "10"
         try {
             let user = await userModel.findOne({email: profile._json.email});
