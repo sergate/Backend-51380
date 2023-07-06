@@ -1,9 +1,7 @@
 import productsModel from "../models/products.js";
 
 export default class Product {
-    constructor() {
-        console.log("Working in MongoDB");
-    }
+    constructor() {}
 
     getAll = async() => {
         let products = await productsModel.find();
@@ -18,7 +16,7 @@ export default class Product {
     }
 
     getOne = async(id) => {
-        let product = await productsModel.findOne({_id: id});
+        let product = await productsModel.findOne({_id: id}).lean();
         return product;
     }
 

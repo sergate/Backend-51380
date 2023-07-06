@@ -1,18 +1,18 @@
-let cart;
 let pid = document.getElementById('pid').innerHTML;
+let cart = document.getElementById('cartId').innerHTML;
 
-Swal.fire({
-    background: 'rgb(20,20,20)',
-    color: 'rgb(180, 180, 180)',
-    title: 'Enter your cart ID',
-    input: 'text',
-    inputValidator: (value) => {
-        return !value && 'You need to enter the cart';
-    },
-    allowOutsideClick: false
-}).then(result => {
-    cart = result.value;
-});
+// Swal.fire({
+//     background: 'rgb(20,20,20)',
+//     color: 'rgb(180, 180, 180)',
+//     title: 'Enter your cart ID',
+//     input: 'text',
+//     inputValidator: (value) => {
+//         return !value && 'You need to enter the cart';
+//     },
+//     allowOutsideClick: false
+// }).then(result => {
+//     cart = result.value;
+// });
 
 const addToCart = async() => {
     let quantity = document.getElementById("quantity").value;

@@ -1,6 +1,15 @@
 <link rel="stylesheet" href="css/styles.css">
 <header>
+  <a href="/">Home</a>
   <h1>Products</h1>
+  <div>
+    {{#if isLogin}}
+      <a href="/user">Bienvenido {{user.first_name}} {{user.last_name}}</a>
+    {{else}}
+      <a href="/login">Inicia sesión aquí</a>
+    {{/if}}
+  </div>
+  
 </header>
 <main>
 
@@ -26,13 +35,15 @@
 
     <div style="grid-area: 'prev';">
       {{#if hasPrevPage}}
-        <a href={{prevLink}} class="movementLink">Página anterior</a>
+        <a href={{prevLink}} class="movementLink">Anterior</a>
       {{/if}}
     </div>
 
+  <div class="simpleBorder" style="grid-area: 'number';">{{page}}</div>
+
     <div style="grid-area: 'next';">
       {{#if hasNextPage}}
-        <a href={{nextLink}} class="movementLink">Siguiente página</a>
+        <a href={{nextLink}} class="movementLink">Siguiente</a>
       {{/if}}
     </div>
 

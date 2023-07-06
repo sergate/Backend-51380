@@ -1,29 +1,29 @@
 import { Router } from "express";
-import Cart from "../dao/dbManagers/carts.js";
+import CartManager from "../dao/dbManagers/carts.js";
 import Product from "../dao/dbManagers/products.js";
 
 const router = Router();
-const cm = new Cart();
+const cm = new CartManager();
 const pm = new Product();
 
-router.get('/', async(req, res) => { 
+router.get('/', async(req, res) => { // Funciona
     let carts = await cm.getAll();
 
     (!carts)?res.send({status: 404, error: "No info avaliable"}):res.send({status: "Ok", payload: carts});
 })
 
-router.get('/:cid', async(req, res) => { 
+router.get('/:cid', async(req, res) => { // Funciona
     let cid = req.params.cid;
     let carts = await cm.getOne(cid);
     (!carts)?res.send({status: 404, error: "No info avaliable"}):res.send({status: "Ok", payload: carts});
 })
 
-router.post('/', async(req, res) => { 
+router.post('/', async(req, res) => { // Funciona
     let result = await cm.createCart();
     res.send({status: "Ok", payload: result});
 })
 
-router.put('/:cid', async(req, res) => { 
+router.put('/:cid', async(req, res) => { // Funciona con array
     try {
         let cid = req.params.cid;
         let products = req.body;
@@ -59,7 +59,7 @@ router.put('/:cid', async(req, res) => {
     
 })
 
-router.put('/:cid/product/:pid', async(req, res) => { 
+router.put('/:cid/product/:pid', async(req, res) => { // Funciona
     try {
         let cid = req.params.cid;
         let pid = req.params.pid;
@@ -84,7 +84,7 @@ router.put('/:cid/product/:pid', async(req, res) => {
     }
 })
 
-router.delete('/:cid/product/:pid', async(req, res) => {
+router.delete('/:cid/product/:pid', async(req, res) => { // Funciona
     try {
         const id = req.params.cid;
         let productId = req.params.pid;
@@ -117,7 +117,7 @@ router.delete('/:cid/product/:pid', async(req, res) => {
     }
 })
 
-router.delete('/:cid', async(req, res) => {
+router.delete('/:cid', async(req, res) => { // Funciona
     try {
         const id = req.params.cid;
         let result = await cm.deleteCart(id);
@@ -125,7 +125,6 @@ router.delete('/:cid', async(req, res) => {
     } catch {
         res.send("The cart doesnt exist");
     }
-    
 })
 
 export default router;

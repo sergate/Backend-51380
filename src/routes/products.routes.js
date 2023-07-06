@@ -1,19 +1,18 @@
 import { Router } from "express";
 import Product from "../dao/dbManagers/products.js";
-import { io } from "../app.js";
 
 const pm = new Product();
 
 const router = Router();
 
-router.get('/', async(req, res) => {
+router.get('/', async(req, res) => { // Funciona
     try {
         let {limit = 10, page = 1, query = 'none', sort} = req.query;
         let products;
     
         if (query != "none") {
     
-            let replaces = 0;
+            let replaces = 0; // Reemplazar ' por "
             for (var i = 0; i < query.length; i++) {
                 if (query[i] == "'") replaces += 1;
             }
@@ -30,14 +29,14 @@ router.get('/', async(req, res) => {
         page = parseInt(page);
         let nextLink, prevLink;
     
-        let invCharacters = 0;
+        let invCharacters = 0; // Reemplaza los "" por su equivalente ASCII asi los links son validos
         for (var i = 0; i < query.length; i++) {
             if (query[i] == '"') invCharacters += 1;
         }
         for (var i = 0; i < invCharacters; i ++) {
             query = query.replace(/"/, '%22');
         }
-        query = query.replace(" ","");
+        query = query.replace(" ",""); // Quita un espacio por las dudas
     
         (products.hasNextPage == true ) ? nextLink = `http://localhost:8080/api/products/?limit=${limit}&page=${page+1}&query=${query}` : nextLink = null;
         (products.hasPrevPage == true ) ? prevLink = `http://localhost:8080/api/products/?limit=${limit}&page=${page-1}&query=${query}` : prevLink = null;
@@ -48,7 +47,7 @@ router.get('/', async(req, res) => {
     }
 })
 
-router.post('/', async(req, res) => {
+router.post('/', async(req, res) => { // Funciona
     try {
         const {title, description, code, price, stock, thumbnails} = req.body;
         let newProduct = {
@@ -66,14 +65,12 @@ router.post('/', async(req, res) => {
             const result = await pm.saveProduct(newProduct);
             res.send({status: "Ok", payload: result});
         }
-        let products = await pm.getAll();
-        io.emit('products', products);
     } catch {
         res.send("This method only allows to create one product and the code must be not used");
     }
 })
 
-router.put('/:pid', async(req, res) => {
+router.put('/:pid', async(req, res) => { // Funciona
     try {
         const id = req.params.pid;
 
@@ -89,21 +86,17 @@ router.put('/:pid', async(req, res) => {
 
         let result = await pm.updateProduct(id, newProduct);
         res.send({status: "Ok", payload: result});
-        let products = await pm.getAll();
-        io.emit('products', products);
     } catch {
         res.send("The pid doesnt exist");
 }
 })
 
-router.delete('/:pid', async(req, res) => {
+router.delete('/:pid', async(req, res) => { // Funciona
     try {
         const id = req.params.pid;
 
         let result = await pm.deleteProduct(id);
         res.send({status: "Ok", payload: result});
-        let products = await pm.getAll();
-        io.emit('products', products);
     } catch {
         res.send("The pid doesnt exist");
     }  

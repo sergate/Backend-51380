@@ -1,12 +1,17 @@
 import { Router } from "express";
 import Product from "../dao/dbManagers/products.js";
 import Cart from "../dao/dbManagers/carts.js";
+import { cookieExtractor } from '../config/passport.config.js'
+import passport from "passport";
 const pm = new Product();
 const cm = new Cart();
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/', passport.authenticate('jwt', {session: false}), async (req, res) => { // Funciona
+    const isLogin = req.user.user ? true : false;
+    const user = req.user.user;
+
     try {
         let {limit = 10, page = 1, query = 'none', sort} = req.query;
         let products;
@@ -26,39 +31,62 @@ router.get('/', async (req, res) => {
         let hasNextPage = products.hasNextPage, hasPrevPage = products.hasPrevPage;
         products = products.docs;
     
-        res.render('home', {products, hasNextPage, hasPrevPage, nextLink, prevLink});
-    } catch {
+        res.render('home', {products, hasNextPage, hasPrevPage, nextLink, prevLink, page, isLogin, user});
+    } catch(error) {
         res.render('error');
     }
 })
 
-router.get('/realTimeProducts', (req, res) => {
-    res.render('realTimeProducts');
-})
-
-router.get('/chat', (req, res) => {
-    res.render('chat');
-})
-
-router.get('/carts/:cid', async (req, res) => {
+router.get('/carts/:cid', passport.authenticate('jwt', {session: false}), async (req, res) => { // Funciona
+    let {cid} = req.params.cid;
     try {
-        let cid = req.params.cid;
+        const isLogin = req.user.user ? true : false;
+        const user = req.user.user;
         let cart = await cm.getOne(cid);
-        console.log(cart)
-        res.render('carts', {cart});
+        res.render('carts', {cart, isLogin, user});
     } catch {
         res.render('error');
     }
 })
 
-router.get('/product/:pid', async (req, res) => {
+router.get('/product/:pid', passport.authenticate('jwt', {session: false}), async (req, res) => { // Funciona
     try {
+        const isLogin = req.user.user ? true : false;
+        const user = req.user.user;
         let pid = req.params.pid;
         let product = await pm.getOne(pid);
-        res.render('product', product);
+        let cartId = user.cart[0];
+        res.render('product', {product, isLogin, user, cartId});
     } catch {
         res.render('error');
     }  
+})
+
+router.get('/register', (req, res) => {
+    res.render('register');
+})
+
+router.get('/login', (req, res) => {
+    res.render('login');
+})
+
+router.get('/user', passport.authenticate('jwt', {session: false}), (req, res) => {
+    const isLogin = req.user.user ? true : false;
+    if (isLogin == false) {
+        return res.render('login');
+    }
+    const user = req.user.user;
+
+    let isAdmin = false;
+    if (user.role == "admin") {
+        isAdmin = true;
+    }
+
+    res.render('user', {user, isAdmin})
+})
+
+router.get('*', (req, res) => {
+    res.render('NotFound');
 })
 
 export default router;
