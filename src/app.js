@@ -38,7 +38,7 @@ server.use(express.urlencoded({ extended: true }));
 server.use(
   session({
     store: mongoconnect.create({
-      mongoUrl: 'mongodb+srv://Ignacio:jY6DHRTn6F9uCAmF@admin.mtszt8r.mongodb.net/?retryWrites=true&w=majority',
+      mongoUrl: 'mongodb+srv://silco30:Alvlgeddl10@mongodbcoder51380.3ccany0.mongodb.net/ecommerce?retryWrites=true&w=majority',
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 60 * 60,
     }),
@@ -57,7 +57,7 @@ server.use(passport.session());
 server.use('/', router);
 
 const test = async () => {
-  await mongoose.connect('mongodb+srv://Ignacio:jY6DHRTn6F9uCAmF@admin.mtszt8r.mongodb.net/?retryWrites=true&w=majority');
+  await mongoose.connect('mongodb+srv://silco30:Alvlgeddl10@mongodbcoder51380.3ccany0.mongodb.net/ecommerce?retryWrites=true&w=majority');
   console.log('Su conexion a la base fue exitosa');
 };
 
