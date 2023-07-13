@@ -1,56 +1,65 @@
-import express from "express";
-import handlebars from "express-handlebars";
-import __dirname from "./utils.js";
-import session from "express-session";
-import MongoStore from "connect-mongo";
-import mongoose from "mongoose";
-import passport from "passport";
-import initPassport from "./config/passport.config.js"
+const express = require('express');
+const { Server } = require('socket.io');
+const { connectionSocket } = require('./utils/soket.io');
+const handlebars = require('express-handlebars');
+const router = require('./routes/index.router');
+const server = express();
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const FileStore = require('session-file-store');
+const mongoconnect = require('connect-mongo');
+const mongoose = require('mongoose');
+const productModel = require('./dao/models/products.model');
+const { PORT } = require('./utils/constants');
+const { init } = require('./dao/models/users.model');
+const { initPassaport } = require('./utils/passport.config');
+const passport = require('passport');
 
-import viewsRouter from "./routes/views.routes.js";
-import sessionRouter from "./routes/session.routes.js";
+mongoose.set('strictQuery', false);
 
-import dotenv from 'dotenv';
-dotenv.config();
+const FileStorage = FileStore(session);
+const httpServer = server.listen(8080, () => {
+  console.log(PORT);
+});
 
-mongoose.set("strictQuery", false); // Quita el warning
+//handlerbars
+server.engine('handlebars', handlebars.engine());
+server.set('views', __dirname + '/views');
+server.set('view engine', 'handlebars');
 
-const app = express();
-const port = 8080;
+//cokiers
+server.use(cookieParser());
 
-const { MONGO_URL } = process.env;
+//express
+server.use(express.static(__dirname + '/public'));
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(MONGO_URL);
-
-app.use(session({
-    store: MongoStore.create({
-        mongoUrl: MONGO_URL,
-        mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
-        ttl: 3000
+server.use(
+  session({
+    store: mongoconnect.create({
+      mongoUrl: 'mongodb+srv://Ignacio:jY6DHRTn6F9uCAmF@admin.mtszt8r.mongodb.net/?retryWrites=true&w=majority',
+      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+      ttl: 60 * 60,
     }),
-    secret: "secretCoder",
-    resave: false,
-    saveUnitialized: true
-}))
+    secret: 'secretCode',
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
-app.use(passport.initialize());
+initPassaport();
+server.use(passport.initialize());
+server.use(passport.session());
 
-initPassport();
+//rutas
 
-app.use(passport.session({
-    secret: "S3cretCod3r"
-}))
+server.use('/', router);
 
-app.engine("handlebars", handlebars.engine());
+const test = async () => {
+  await mongoose.connect('mongodb+srv://Ignacio:jY6DHRTn6F9uCAmF@admin.mtszt8r.mongodb.net/?retryWrites=true&w=majority');
+  console.log('Su conexion a la base fue exitosa');
+};
 
-app.set("views", __dirname + "/views");
-app.set("view engine", "handlebars");
-
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(express.static(__dirname + "/public"));
-
-app.use('/', viewsRouter);
-app.use('/api/session', sessionRouter);
-
-const httpServer = app.listen(port, () => console.log(`Listening on port ${port}`));
+test();
+connectionSocket(httpServer);

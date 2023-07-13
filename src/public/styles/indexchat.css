@@ -1,0 +1,22 @@
+body{
+    background: url('../image/wallhaven-4lxwoq.jpg');
+    background-repeat: repeat;
+}
+
+#chatBox {
+    border-radius: 10px;
+    padding: 5px;
+    width: 100%;
+}
+
+
+
+main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#chat {
+    flex: 1;
+}

@@ -1,0 +1,82 @@
+{
+  "products": [
+    {
+      "id": 0,
+      "title": "Jhony Walker Blue Label",
+      "description": "Blue Label es el whisky cumbre de la Casa Walker, es un compendio de mezclas. Creado para reflejar el estilo de los whiskies del siglo 19",
+      "code": "BL405",
+      "price": "75000",
+      "status": true,
+      "stock": "10",
+      "category": "wisky",
+      "thumbnail": ["https://d2r9epyceweg5n.cloudfront.net/stores/001/152/625/products/j-walker-blue1-e86b869f1eeeeed48b15882571117532-1024-1024.jpg"]
+    },
+    {
+      "id": 1,
+      "title": "Macallan 12 años",
+      "description": "El color de Macallan 12 años es suave y nos recuerda a la miel. En nariz, encontramos notas de hierba cortada junto a otras notas muy cremosas y dulces",
+      "code": "MC303",
+      "price": "70000",
+      "status": true,
+      "stock": "15",
+      "category": "wisky",
+      "thumbnail": ["https://http2.mlstatic.com/D_NQ_NP_978295-MLA48012569919_102021-O.webp"]
+    },
+    {
+      "id": 2,
+      "title": "Chivas Regal",
+      "description": "Wisky ingles",
+      "code": "ENG402",
+      "price": "18000",
+      "status": true,
+      "stock": "20",
+      "category": "wisky",
+      "thumbnail": ["https://http2.mlstatic.com/D_NQ_NP_728015-MLA49924274697_052022-O.webp"]
+    },
+    {
+      "id": 3,
+      "title": "Luigi Bosca",
+      "description": "Vino tinto",
+      "code": "V866",
+      "price": "1100",
+      "status": "true",
+      "stock": "100",
+      "category": "Vinos",
+      "thumbnail": ["https://luigiboscaar.vteximg.com.br/arquivos/ids/157048-650-650/LB_Malbec_2020_GENERAL_1.png?v=637892902985700000"]
+    },
+    {
+      "id": 4,
+      "title": "Trumpeter",
+      "description": "Vino fino con aromas frutales",
+      "code": "VT755",
+      "price": "1500",
+      "status": "true",
+      "stock": "150",
+      "category": "Vinos",
+      "thumbnail": ["https://www.espaciovino.com.ar/media/default/0001/62/thumb_61963_default_big.jpeg"]
+    },
+    {
+      "id": 5,
+      "title": "Cordero con piel de Lobo",
+      "description": "Vino Barato",
+      "code": "CL325",
+      "price": "500",
+      "status": "true",
+      "stock": "200",
+      "category": "Vinos",
+      "thumbnail": ["https://unvinoahora.com.ar/wp-content/uploads/2020/06/MOM005a.jpg"]
+    },
+    null,
+    {
+      "id": 6,
+      "title": "Gin Aconcagua",
+      "description": "Gin 100% Argentino eleaborado con agua del cerro Aconcagua",
+      "code": "GA65",
+      "price": "2200",
+      "status": "true",
+      "stock": "60",
+      "category": "Gins",
+      "thumbnail": ["https://http2.mlstatic.com/D_NQ_NP_954418-MLA46145469578_052021-O.jpg"]
+    }
+  ]
+}

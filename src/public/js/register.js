@@ -1,27 +1,25 @@
-const form = document.getElementById("registerForm");
+const registerForm = document.getElementById("registerForm");
 
-form.addEventListener('submit', event => {
-
-    event.preventDefault();
-
-    const data = new FormData(form);
-    const object = {};
-
-    data.forEach((value, key) => {
-        object[key] = value;
-    })
-    
-    fetch('/api/session/register', {
-        method: 'POST',
-        body: JSON.stringify(object),
-        headers: {
-            'Content-type': 'application/json'
-        }
-    }).then(result => {
-        let response = result;
-        console.log(response)
-        if (response.redirected) {
-            location.replace('/login')
-        }
-    })
-})
+registerForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  const data = Object.fromEntries(new FormData(registerForm));
+  fetch("/api/session/register", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.error) {
+        registerForm.firstChild.textContent = `${res.error}`;
+        console.log(res.error);
+        return;
+      } else {
+        console.log(res);
+        location.assign("http://localhost:8080/login");
+        return;
+      }
+    });
+});
