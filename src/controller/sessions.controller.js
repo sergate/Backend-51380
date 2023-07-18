@@ -1,4 +1,4 @@
-//cookies
+//cokies
 
 const sessionLogin = async (req, res) => {
   res.send(req.user);

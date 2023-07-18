@@ -45,5 +45,3 @@ module.exports = {
     emitMessage,
     emitDeleteMj
 };
-
-

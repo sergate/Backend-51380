@@ -11,4 +11,3 @@ buttonNext.addEventListener('click', () => {
 buttonPrev.addEventListener('click', () => {
    window.location.replace(`/products/?page=${parseInt(page)-1}`)
 });
-

@@ -10,16 +10,17 @@ const FileStore = require('session-file-store');
 const mongoconnect = require('connect-mongo');
 const mongoose = require('mongoose');
 const productModel = require('./dao/models/products.model');
-const { PORT } = require('./utils/constants');
 const { init } = require('./dao/models/users.model');
 const { initPassaport } = require('./utils/passport.config');
 const passport = require('passport');
+const dotenv = require('dotenv');
+dotenv.config();
 
 mongoose.set('strictQuery', false);
 
 const FileStorage = FileStore(session);
 const httpServer = server.listen(8080, () => {
-  console.log(PORT);
+  console.log(process.env.PORT);
 });
 
 //handlerbars
@@ -38,11 +39,11 @@ server.use(express.urlencoded({ extended: true }));
 server.use(
   session({
     store: mongoconnect.create({
-      mongoUrl: 'mongodb+srv://silco30:Alvlgeddl10@mongodbcoder51380.3ccany0.mongodb.net/ecommerce?retryWrites=true&w=majority',
+      mongoUrl: process.env.MONGO_URL,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 60 * 60,
     }),
-    secret: 'secretCode',
+    secret: process.env.SECRET_CODE,
     resave: true,
     saveUninitialized: true,
   })
@@ -57,7 +58,7 @@ server.use(passport.session());
 server.use('/', router);
 
 const test = async () => {
-  await mongoose.connect('mongodb+srv://silco30:Alvlgeddl10@mongodbcoder51380.3ccany0.mongodb.net/ecommerce?retryWrites=true&w=majority');
+  await mongoose.connect(process.env.MONGO_URL);
   console.log('Su conexion a la base fue exitosa');
 };
 

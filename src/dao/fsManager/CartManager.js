@@ -60,5 +60,3 @@ const readFile = async (path) => {
 }  
 
 module.exports = CardsManager;
-
-
