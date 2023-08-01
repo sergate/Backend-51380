@@ -8,7 +8,7 @@ class ChatsManager {
             const saveMessage = await chatModel.create(message)
              return saveMessage
          } catch (error) {
-            return {msg:'No se puede Grabar el Mensaje'}
+            return {msg:'No se puedo Grabar el Mensaje'}
          }
     }
    
@@ -17,7 +17,7 @@ class ChatsManager {
             const messages = await chatModel.find()
             return messages
         } catch (error) {
-            return {msg:'No se puede Mostrar mensajes'}
+            return {msg:'No se puedo Mostrar mensajes'}
         }
     }
 
@@ -26,7 +26,7 @@ class ChatsManager {
             const deleteMj = await chatModel.findByIdAndDelete(id)
             return deleteMj
         } catch (error) {
-            return {msg:'No se puede Mostrar mensajes'}
+            return {msg:'No se puedo Mostrar mensajes'}
         }
     }
 

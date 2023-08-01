@@ -8,7 +8,7 @@ const loginRegister = async (req, res) => {
   res.send(req.user);
 };
 
-const current = async (req, res) => {
+const current = async (req, res, next) => {
   if (req.user) {
     res.render('current', {
       name: req.user.firstName,

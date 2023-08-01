@@ -31,7 +31,7 @@ const initPassaport = () => {
                 lastName: lastName,
                 email: username,
                 password: hash,
-                rol: 'administrador',
+                role: 'admin',
                 cart: id,
               });
               done(null, user);
@@ -41,7 +41,7 @@ const initPassaport = () => {
                 lastName: lastName,
                 email: username,
                 password: hash,
-                rol: 'users',
+                role: 'user',
                 cart: id,
               });
               console.log(user);

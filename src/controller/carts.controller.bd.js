@@ -132,21 +132,21 @@ const updateQuantityProduct = async (req, res) => {
       });
     } else {
       findProductcart.quantity = quantity;
-      if(findProductcart.quantity > quantity){
-        cart.priceTotal = cart.priceTotal  - (product.price * findProductcart.quantity)
-      }else{
-        cart.priceTotal = cart.priceTotal  + (product.price * findProductcart.quantity)
+      if (findProductcart.quantity > quantity) {
+        cart.priceTotal = cart.priceTotal - product.price * findProductcart.quantity;
+      } else {
+        cart.priceTotal = cart.priceTotal + product.price * findProductcart.quantity;
       }
-    } 
+    }
   }
-  cart.priceTotal = cart.products.reduce((acumulador, total) => acumulador + (total.price * total.quantity), 0)
+  cart.priceTotal = cart.products.reduce((acumulador, total) => acumulador + total.price * total.quantity, 0);
   cart.quantityTotal = cart.products.reduce((Acomulador, ProductoActual) => Acomulador + ProductoActual.quantity, 0);
   const cartToUpdate = await BdCartManager.updateCartProducts(cart);
   return res.status(200).json({ msg: 'Cantidad de producto actualizada', cart: cartToUpdate });
 };
 
 const cartUpdate = async (req, res) => {
-  const  {cid}  = req.params;
+  const { cid } = req.params;
   const body = req.body;
   const Cart = await BdCartManager.getCartsId(cid);
 
@@ -158,7 +158,7 @@ const cartUpdate = async (req, res) => {
   Cart.products = [];
   Cart.cantidadTotal = 0;
   Cart.totalPrice = 0;
-  
+
   const product = await BdProductManager.getProductId(body.id);
 
   if (!product) {
@@ -167,10 +167,10 @@ const cartUpdate = async (req, res) => {
       ok: false,
     });
   }
-  Cart.products.push({id:product.id,quantity:body.quantity})
-  
+  Cart.products.push({ id: product.id, quantity: body.quantity });
+
   Cart.quantityTotal = body.quantity;
-  Cart.priceTotal = product.price*body.quantity;
+  Cart.priceTotal = product.price * body.quantity;
 
   const cartToUpdate = await BdCartManager.updateCartProducts(Cart);
 
@@ -179,7 +179,6 @@ const cartUpdate = async (req, res) => {
     cart: cartToUpdate,
   });
 };
-
 
 const deleteToCart = async (req, res) => {
   const { cid } = req.params;
@@ -200,6 +199,12 @@ const deleteToCart = async (req, res) => {
   });
 };
 
+const purchase = async (req, res) => {
+  const cid = req.params.cid;
+  const purchaseResponse = await Carts.purchase(cid);
+  return !purchaseResponse.error ? res.send(purchaseResponse) : res.status(purchaseResponse.status).send(purchaseResponse);
+};
+
 module.exports = {
   createCarts,
   bdgetCart,
@@ -209,4 +214,5 @@ module.exports = {
   updateQuantityProduct,
   cartUpdate,
   deleteToCart,
+  purchase,
 };
