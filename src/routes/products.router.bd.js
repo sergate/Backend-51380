@@ -1,16 +1,7 @@
 const { Router } = require('express');
 const productsControllerBD = require('../controller/products.controller.bd');
 const { default: isAdmin } = require('../middlewares/isAdmin');
-
-const adminPermission = async (req, res, next) => {
-  if (req.session.user.role !== 'admin') {
-    return res.status(401).json({
-      status: 'error',
-      msg: 'Usuario no autorizado',
-    });
-  }
-  next();
-};
+const adminPermission = require('../middlewares/isAdmin');
 
 const router = Router();
 

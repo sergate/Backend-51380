@@ -57,110 +57,113 @@ class BdCartsManager {
     const cartUpdated = await cartsModel.findByIdAndUpdate(cart.id, cart, { new: true });
     return cartUpdated;
   };
-}
-// /Nuevos metodos por aplicacion del ticket y el stock/
-deleteProductToCart = async (cid, pid) => {
-  try {
-    const cartFinded = await this.getById(cid);
-    if (cartFinded.error)
-      return {
-        status: 404,
-        error: `Cart with id ${cid} not found`,
-      };
-
-    const productInCart = cartFinded.find((product) => product.pid._id == pid);
-
-    if (productInCart) {
-      await cartsModel.findByIdAndUpdate(cid, { $pull: { products: { pid } } });
-      return { status: 'success', message: 'Product deleted successfully' };
-    }
-    return {
-      status: 404,
-      error: `The product with id ${pid} was not found in the cart with id ${cid}`,
-    };
-  } catch (error) {
-    return {
-      status: 500,
-      error: `An error occurred while deleting the product with id ${pid}`,
-    };
-  }
-};
-
-deleteProducts = async (cid) => {
-  try {
-    const cartFinded = await this.getById(cid);
-    if (cartFinded.error)
-      return {
-        status: 404,
-        error: `Cart with id ${cid} not found`,
-      };
-
-    await cartsModel.findByIdAndUpdate(cid, { products: [] });
-    return { status: 'success', message: 'All product deleted successfully' };
-  } catch (error) {
-    return {
-      status: 500,
-      error: `An error occurred while deleting products`,
-    };
-  }
-};
-
-deleteById = async (cid) => {
-  try {
-    const cartDeleted = await cartsModel.findByIdAndDelete(cid);
-    return cartDeleted === null
-      ? {
+  // /Nuevos metodos por aplicacion del ticket y el stock/
+  deleteProductToCart = async (cid, pid) => {
+    try {
+      const cartFinded = await this.getById(cid);
+      if (cartFinded.error)
+        return {
           status: 404,
-          error: `Cart with id ${cid} not found`,
-        }
-      : {
-          status: 'success',
-          message: `Cart with id ${cid} deleted successfully`,
+          error: `Cart con id ${cid} no encontrado`,
         };
-  } catch (error) {
-    return {
-      status: 500,
-      error: `An error occurred while deleting products`,
-    };
-  }
-};
 
-purchase = async (cid, purchaser) => {
-  try {
-    const productsInCart = await this.getById(cid);
+      const productInCart = cartFinded.find((product) => product.pid._id == pid);
 
-    if (productsInCart.error)
+      if (productInCart) {
+        await cartsModel.findByIdAndUpdate(cid, { $pull: { products: { pid } } });
+        return { status: 'success', message: 'Producto eliminado satisfactoriamente' };
+      }
       return {
         status: 404,
-        error: `Cart with id ${cid} not found`,
+        error: `El producto con el id ${pid} no fue encontrado en el carrito con id ${cid}`,
       };
-
-    const existProductOutStock = Boolean(productsInCart.find((product) => product.pid.stock < product.quantity));
-
-    if (existProductOutStock) return { status: 400, message: 'Exist product out stock' };
-
-    let totalAmount = 0;
-
-    for (const product of productsInCart) {
-      const newStock = product.pid.stock - product.quantity;
-      totalAmount += product.pid.price;
-      await dbpm.putById(product.pid._id, { stock: newStock });
+    } catch (error) {
+      return {
+        status: 500,
+        error: `Hubo un error al eliminar el producto con el  id ${pid}`,
+      };
     }
+  };
 
-    const ticket = await ticketModel.create({
-      code: faker.database.mongodbObjectId(),
-      purchaseDateTime: new Date().toLocaleString(),
-      amount: totalAmount,
-      purchaser: 'yo',
-    });
-    return { payload: { ticket, productsInCart } };
-  } catch (error) {
-    console.log(error);
-    return {
-      status: 500,
-      error: `An error occurred while purchase`,
-    };
-  }
-};
+  deleteProducts = async (cid) => {
+    try {
+      const cartFinded = await this.getById(cid);
+      if (cartFinded.error)
+        return {
+          status: 404,
+          error: `Cart con id ${cid} no encontrado`,
+        };
+
+      await cartsModel.findByIdAndUpdate(cid, { products: [] });
+      return { status: 'success', message: 'todos los productos eliminados' };
+    } catch (error) {
+      return {
+        status: 500,
+        error: `Hubo un error al eliminar todos los productos`,
+      };
+    }
+  };
+
+  deleteById = async (cid) => {
+    try {
+      const cartDeleted = await cartsModel.findByIdAndDelete(cid);
+      return cartDeleted === null
+        ? {
+            status: 404,
+            error: `Cart con id ${cid} no encontrado`,
+          }
+        : {
+            status: 'success',
+            message: `Cart con id ${cid} eliminado satisfactoriamente`,
+          };
+    } catch (error) {
+      return {
+        status: 500,
+        error: `Un error ocurrio al eliminar los productos`,
+      };
+    }
+  };
+  purchase = async (ticket) => {
+    const ticketCreate = await ticketModel.create(ticket);
+    return ticketCreate;
+  };
+}
+// purchase = async (cid, purchaser) => {
+//   try {
+//     const productsInCart = await this.getById(cid);
+
+//     if (productsInCart.error)
+//       return {
+//         status: 404,
+//         error: `Cart con id ${cid} no encontrado`,
+//       };
+
+//     const existProductOutStock = Boolean(productsInCart.find((product) => product.pid.stock < product.quantity));
+
+//     if (existProductOutStock) return { status: 400, message: 'Exist product out stock' };
+
+//     let totalAmount = 0;
+
+//     for (const product of productsInCart) {
+//       const newStock = product.pid.stock - product.quantity;
+//       totalAmount += product.pid.price;
+//       await dbpm.putById(product.pid._id, { stock: newStock });
+//     }
+
+//     const ticket = await ticketModel.create({
+//       code: faker.database.mongodbObjectId(),
+//       purchaseDateTime: new Date().toLocaleString(),
+//       amount: totalAmount,
+//       purchaser: 'yo',
+//     });
+//     return { payload: { ticket, productsInCart } };
+//   } catch (error) {
+//     console.log(error);
+//     return {
+//       status: 500,
+//       error: `Un error ocurrio al realizar el purchase`,
+//     };
+//   }
+// };
 
 module.exports = new BdCartsManager();

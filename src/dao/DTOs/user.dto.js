@@ -1,8 +1,9 @@
-class UserDTO {
-    constructor(user) {
-      this.firstName = user.firstName;
-      this.lastName = user.lastName;
-      this.fullName = user.firstName + ' ' + user.lastName;
-    }
-  }
-module.exports = UserDTO;
+const DTOsUser = (user) => {
+  const newUserDto = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    role: user.role,
+  };
+  return newUserDto;
+};
+module.exports = DTOsUser;

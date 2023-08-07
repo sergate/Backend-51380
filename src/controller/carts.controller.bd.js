@@ -1,6 +1,7 @@
 const BdProductManager = require('../dao/mongoManager/BdProductManager');
 const BdCartManager = require('../dao/mongoManager/BdCartManager');
 const { find } = require('../dao/models/products.model');
+const { v4 } = require('uuid');
 
 const createCarts = async (req, res) => {
   const cart = req.body;
@@ -200,9 +201,39 @@ const deleteToCart = async (req, res) => {
 };
 
 const purchase = async (req, res) => {
-  const cid = req.params.cid;
-  const purchaseResponse = await Carts.purchase(cid);
-  return !purchaseResponse.error ? res.send(purchaseResponse) : res.status(purchaseResponse.status).send(purchaseResponse);
+  let total = 0;
+  const id = req.params.cid;
+  const carts = await BdCartManager.getCartsId(id);
+
+  const cartsTicket = [];
+  const cartsReject = [];
+
+  for (let i = 0; i < carts.products.length; i++) {
+    const productBd = await BdProductManager.getProductId(carts.products[i].id);
+    if (productBd.stock >= carts.products[i].quantity) {
+      productBd.stock = productBd.stock - carts.products[i].quantity;
+      await BdProductManager.UpdateProduct(productBd.id, productBd);
+      total += productBd.price * carts.products[i].quantity;
+      cartsTicket.push(carts.products);
+      const cambios = await BdCartManager.deleteProductToCart(id, productBd.id);
+      console.log(cambios);
+    } else productBd.stock <= carts.products[i].quantity;
+    {
+      cartsReject.push(productBd); //muestra los productos que no se pudieron agregar por falta de stock
+    }
+  }
+  const newTicket = await BdCartManager.purchase({ code: v4(), amount: total, purchaser: id });
+  if (!newTicket) {
+    return res.json({
+      msg: 'No se pudo crear Ticket',
+    });
+  }
+  return res.json({
+    msg: 'Ticket Creado con Exito',
+    payload: newTicket,
+    msg: 'Productos sin stock',
+    product: cartsReject,
+  });
 };
 
 module.exports = {
