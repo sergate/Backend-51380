@@ -15,6 +15,7 @@ const { PORT } = require('./utils/constants');
 const { init } = require('./dao/models/users.model');
 const { initPassaport } = require('./utils/passport.config');
 const passport = require('passport');
+const errorList = require('./middlewares/errors');
 mongoose.set('strictQuery', false);
 
 const FileStorage = FileStore(session);
@@ -46,6 +47,7 @@ server.use(
   })
 );
 
+server.use(errorList);
 initPassaport();
 server.use(passport.initialize());
 server.use(passport.session());

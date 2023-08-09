@@ -1,5 +1,6 @@
 const cartsModel = require('../models/carts.model');
 const ticketModel = require('../models/ticket.model');
+const { faker } = require('@faker-js/faker');
 // const productModel = require('../models/products.model')
 
 class BdCartsManager {

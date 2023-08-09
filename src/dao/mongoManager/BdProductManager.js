@@ -1,13 +1,16 @@
 const productModel = require('../models/products.model');
+const { INVALID_FILTER } = require('../../errors/enumErrors');
+const { invalidId } = require('../../utils/creatorMsg');
+const CustomError = require('../../errors/customError');
 
 class BdProductManager {
   constructor() {
     this.products = [];
   }
 
-  getProduct = async (page = 1, limit = 6, sort, query={}) => {
+  getProduct = async (page = 1, limit = 6, sort, query = {}) => {
     try {
-      const products = await productModel.paginate(query, { page, limit , lean:true, sort:{price:sort}});
+      const products = await productModel.paginate(query, { page, limit, lean: true, sort: { price: sort } });
       return products;
     } catch (error) {
       return { msg: 'Error al Obtener Productos' };
@@ -23,12 +26,12 @@ class BdProductManager {
     }
   };
 
-  getProductId = async (id) => {
+  getProductId = async (id, next) => {
     try {
       const getproductId = await productModel.findById(id);
       return getproductId;
     } catch (error) {
-      return { msg: 'Producto no encontrado' };
+      return next(CustomError.createError({ code: 401, msg: invalidId(id), typeError: INVALID_FILTER }));
     }
   };
 
