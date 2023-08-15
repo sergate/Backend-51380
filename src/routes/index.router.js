@@ -7,6 +7,7 @@ const viewRoute = require('./views.route');
 const routerSession = require('./session.router');
 const chatsRouter = require('./chats.router');
 const mockingRouter = require('./mockingproducts.router');
+const loggers = require('./logerTest.router');
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/api/productsBd/', productsRouteBd);
 router.use('/api/cartsBd/', cartsRouteBd);
 router.use('/api/chats/', chatsRouter);
 router.use('/api/mockingproducts/', mockingRouter);
+router.use('/api/loggerTest/', loggers);
 
 module.exports = router;
