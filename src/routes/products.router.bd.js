@@ -1,14 +1,12 @@
 const { Router } = require('express');
 const productsControllerBD = require('../controller/products.controller.bd');
-const { default: isAdmin } = require('../middlewares/isAdmin');
-const adminPermission = require('../middlewares/isAdmin');
-
+const permisions = require('../middlewares/permissions');
 const router = Router();
 
 router.get('/', productsControllerBD.getProductsBd);
-router.post('/', adminPermission, productsControllerBD.addProductBd);
+router.post('/', permisions.adminPermission, productsControllerBD.addProductBd);
 router.get('/:pid', productsControllerBD.getProductIdBd);
-router.put('/:pid', adminPermission, productsControllerBD.UpdateProductBd);
-router.delete('/:pid', adminPermission, productsControllerBD.deleteProductBd);
+router.put('/:pid', permisions.adminPermission, productsControllerBD.UpdateProductBd);
+router.delete('/:pid', permisions.adminPermission, productsControllerBD.deleteProductBd);
 
 module.exports = router;

@@ -1,7 +1,7 @@
-const BdProductManager = require('../dao/mongoManager/BdProductManager');
+const dao = require('../dao/factory');
 const ProductService = require('./products.service');
 
-const ProductRepository = new ProductService(BdProductManager);
+const ProductRepository = new ProductService(dao);
 
 module.exports = {
   ProductRepository,

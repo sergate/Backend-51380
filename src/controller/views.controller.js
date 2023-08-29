@@ -42,12 +42,14 @@ const profile = async (req, res) => {
 const logout = async (req, res) => {
   req.session.destroy();
   res.render('logout');
-  // setTimeout(function(){
-  //   window.location.href = 'http://localhost:8080/login';
-  // },5000)
-  // res.send("Session has been destroyed");
 };
 
+const fortgotPassword = async (req, res) => {
+  res.render('forgot-password');
+};
+const recoverPassword = async (req, res) => {
+  res.render('recover-password');
+};
 module.exports = {
   views,
   viewCart,
@@ -55,4 +57,6 @@ module.exports = {
   login,
   profile,
   logout,
+  fortgotPassword,
+  recoverPassword,
 };

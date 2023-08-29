@@ -44,7 +44,7 @@ class BdCartsManager {
     }
   };
 
-  addProductToCarts = async (cid, product) => {
+  addProductToCarts = async (cid, product, user) => {
     const cart = await cartsModel.findById(cid);
     console.log(JSON.stringify(product));
     const resultado = cart.products.findIndex((prod) => prod.id == product.id);

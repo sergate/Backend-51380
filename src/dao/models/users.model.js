@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const userCollection = 'users';
 
-const roles = ['admin', 'user'];
+const roles = ['admin', 'user', 'premium'];
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: roles,
     required: true,
-    default: 'user',
+    default: 'users',
   },
 });
 

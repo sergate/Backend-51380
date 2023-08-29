@@ -1,6 +1,6 @@
 const userModel = require('../dao/models/users.model');
 
-const getUser = () => userModel.find();
+const getUser = (email) => userModel.find(email);
 
 module.exports = {
   getUser,

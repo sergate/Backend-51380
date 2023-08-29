@@ -27,22 +27,4 @@ loginForm.addEventListener('submit', (e) => {
         });
       }
     });
-
-
-
-
-
-
-
-
-  // .then((res) => {
-  //   if (res.error) {
-  //     loginForm.firstChild.textContent = `${res.error}`;
-  //     console.log(res.error);
-  //     return;
-  //   } else {
-  //     console.log(res);
-  //     location.assign("/products");
-  //   }
-  // });
 });

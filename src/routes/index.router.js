@@ -15,10 +15,10 @@ router.use('/api/products/', productsRoute);
 router.use('/api/carts/', cardsRoute);
 router.use('/', viewRoute);
 router.use('/api/session/', routerSession);
+router.use('/api/users/', routerSession);
 router.use('/api/productsBd/', productsRouteBd);
 router.use('/api/cartsBd/', cartsRouteBd);
 router.use('/api/chats/', chatsRouter);
 router.use('/api/mockingproducts/', mockingRouter);
 router.use('/api/loggerTest/', loggers);
-
 module.exports = router;

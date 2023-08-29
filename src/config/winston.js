@@ -54,7 +54,7 @@ const loggerDev = winston.createLogger({
 
 const mdwlLogger = (req, res, next) => {
   req.logger = process.env.NODE_ENV ? loggerProd : loggerDev;
-  req.logger.info('${req.method}' - '${req.url} - Todo piola?');
+  req.logger.info(`${req.method}` + `${req.url} - Todo piola?`);
   next();
 };
 

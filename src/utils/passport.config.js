@@ -19,7 +19,7 @@ const initPassaport = () => {
         const { firstName, lastName } = req.body;
         try {
           const exitEmail = await BdSessionManager.getEmail({ email: username });
-
+          console.log(exitEmail);
           if (exitEmail) {
             done(null, false);
           } else {
