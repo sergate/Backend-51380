@@ -1,0 +1,79 @@
+paths:
+  /api/productsBd:
+    get:
+      summary: obtiene todos los productos de la base de datos
+      tags:
+        - 'Products'
+      responses:
+        '200':
+          description: Se obtuvieron los productos correctamente
+        '500':
+          description: Se produjo un error en la conexion del servidor
+    post:
+      summary: Agrega  productos de la base de datos
+      tags:
+        - 'Products'
+      responses:
+        '200':
+          description: Se agrego el   producto correctamente
+        '500':
+          description: Se produjo un error al agregar el producto
+  /api/productsBd/{pid}:
+    get:
+      summary: obtiene todos el producto por ID
+      tags:
+        - 'Products'
+      parameters:
+        - name: pid
+          in: path
+          description: identificador del producto
+          required: true
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: Se obtuvo el producto correctamente
+        '501':
+          description: El id ingresado no es el correcto
+    put:
+      summary: Actualizar producto en la bd
+      tags:
+        - 'Products'
+      parameters:
+        - name: pid
+          in: path
+          description: identificador del producto
+          required: true
+          schema:
+            $type: String
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateProduct'
+      responses:
+        '200':
+          description: Se actualizaron los  productos correctamente
+        '500':
+          description: No se pudo actualizar el producto
+    delete:
+      summary: Eliminar producto en la bd
+      tags:
+        - 'Products'
+      parameters:
+        - name: pid
+          in: path
+          description: identificador del producto
+          required: true
+          schema:
+            $type: String
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateProduct'
+      responses:
+        '200':
+          description: Se eliminaron los productos correctamente
+        '500':
+          description: Se produjo un error en la conexion del servidor

@@ -22,7 +22,7 @@ class BdCartsManager {
       const cart = await cartsModel.findById(id);
       return cart;
     } catch (error) {
-      return undefined;
+      return { msg: 'No se pueden traer los carritos' };
     }
   };
 

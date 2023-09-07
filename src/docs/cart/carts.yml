@@ -1,0 +1,123 @@
+paths:
+  /api/cartsBd:
+    get:
+      summary: obtiene todos los carritos de la base de datos
+      tags:
+        - 'CartsBd'
+      responses:
+        '200':
+          description: Se obtuvieron todos los carritos registrados correctamente
+        '500':
+          description: Se produjo un error en la conexion del servidor
+  /api/cartsBd/{cid}:
+    get:
+      summary: obtiene el carrito de la base de datos
+      tags:
+        - 'CartsBd'
+      parameters:
+        - name: cid
+          in: path
+          description: identificador del carrito
+          required: true
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: Se obtuvo el carrito correctamente
+        '500':
+          description: Se produjo un error al obtener el carrito
+    put:
+      summary: Actualizar carrito en la bd
+      tags:
+        - 'CartsBd'
+      parameters:
+        - name: cid
+          in: path
+          description: identificador del carrito
+          required: true
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: Se actualizó el carrito correctamente
+        '500':
+          description: No se pudo actualziar el carrito
+    delete:
+      summary: Elimina los productos del carrito
+      tags:
+        - 'CartsBd'
+      parameters:
+        - name: cid
+          in: path
+          description: identificador del carrito
+          required: true
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: Se vacio el carrito correctamente
+        '500':
+          description: Se produjo un problema de conexion con el servidor
+  /api/cartsBd/{cid}/product/{pid}:
+    post:
+      summary: Agrega productos al carrito
+      tags:
+        - 'CartsBd'
+      parameters:
+        - name: cid
+          in: path
+          description: identificador del carrito
+          required: true
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: Se  agrego el producto correctamente
+        '500':
+          description: Producto inexitente
+    delete:
+      summary: Eliminar producto por id
+      tags:
+        - 'CartsBd'
+      parameters:
+        - name: cid
+          in: path
+          description: identificador del carrito
+          required: true
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: Se elimino el carrito correctamente
+        '500':
+          description: No se pudo eliminar el producto
+    put:
+      summary: Actualiza la cantidad de productos en el carrito
+      tags:
+        - 'CartsBd'
+      parameters:
+        - name: cid
+          in: path
+          description: identificador del carrito
+          required: true
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: Se actualizo la cantidad del producto de manera correcta
+        '500':
+          description: Se produjo un error en la conexion del servidor
+    get:
+      summary: obtiene el carrito de la base de datos
+      tags:
+        - 'CartsBd'
+      parameters:
+        - name: cid
+          in: path
+          description: identificador del carrito
+          required: true
+          schema:
+            $type: String
+      responses:
+        '200':
+          description: Se obtuvo el carrito correctamente

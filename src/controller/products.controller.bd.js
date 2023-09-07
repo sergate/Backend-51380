@@ -4,6 +4,7 @@ const CustomError = require('../errors/customError.js');
 const { invalidParamsProduct, invalidId } = require('../utils/creatorMsg');
 const { ERROR_FROM_SERVER } = require('../errors/enumErrors');
 const { INVALID_FILTER } = require('../errors/enumErrors');
+
 const getProductsBd = async (req, res) => {
   const { limit, page, sort, ...query } = req.query;
   const products = await ProductRepository.get(page, limit, sort, query);
@@ -47,6 +48,7 @@ const getProductIdBd = async (req, res) => {
     res.json(getProductId);
   }
 };
+
 const UpdateProductBd = async (req, res) => {
   const id = req.params.pid;
   const product = req.body;
