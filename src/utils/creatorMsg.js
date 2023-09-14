@@ -9,7 +9,7 @@ const invalidParamsProduct = (body) => {
   };
   
   const invalidId = (req) => {
-    return `Se necesita un ID valido, el ID ingresado es : ${req.params.id}`;
+    return `Se necesita un ID valido,`;
   };
   
   module.exports = {

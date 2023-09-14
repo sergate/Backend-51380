@@ -4,7 +4,7 @@ const permisions = require('../middlewares/permissions');
 const router = Router();
 
 router.get('/', productsControllerBD.getProductsBd);
-router.post('/', permisions.adminPermission, productsControllerBD.addProductBd);
+router.post('/', productsControllerBD.addProductBd);
 router.get('/:pid', productsControllerBD.getProductIdBd);
 router.put('/:pid', permisions.adminPermission, productsControllerBD.UpdateProductBd);
 router.delete('/:pid', permisions.adminPermission, productsControllerBD.deleteProductBd);

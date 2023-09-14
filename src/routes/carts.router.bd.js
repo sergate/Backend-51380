@@ -6,7 +6,7 @@ const router = Router();
 router.post('/', cartsControllerBd.createCarts);
 router.get('/', cartsControllerBd.bdgetCart);
 router.get('/:cid', cartsControllerBd.bdgetCartId);
-router.post('/:cid/product/:pid', permisions.userPermission, permisions.premiumPermission, cartsControllerBd.addProductToCart);
+router.post('/:cid/product/:pid', permisions.userPermission, permisions.adminPermission, cartsControllerBd.addProductToCart);
 router.delete('/:cid/product/:pid', cartsControllerBd.deleteProductToCart);
 router.put('/:cid', cartsControllerBd.cartUpdate);
 router.put('/:cid/product/:pid', cartsControllerBd.updateQuantityProduct);

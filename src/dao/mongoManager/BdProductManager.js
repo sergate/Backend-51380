@@ -31,7 +31,7 @@ class BdProductManager {
       const getproductId = await productModel.findById(id);
       return getproductId;
     } catch (error) {
-      return next(CustomError.createError({ code: 401, msg: invalidId(id), typeError: INVALID_FILTER }));
+      return CustomError.createError({ code: 401, msg: invalidId(id), typeError: INVALID_FILTER });
     }
   };
 
