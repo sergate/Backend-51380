@@ -1,7 +1,3 @@
-const jwt = require('jsonwebtoken');
-const { PRIVATE_KEY_JWT } = require('../config/config');
-const BdSessionManager = require('../dao/mongoManager/BdSessionManager');
-
 const generateToken = (payload) => {
   const token = jwt.sign({ payload }, PRIVATE_KEY_JWT, { expiresIn: '1h' });
   return token;

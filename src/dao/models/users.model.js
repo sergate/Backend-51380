@@ -32,6 +32,19 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: 'users',
   },
+  documents: {
+    type: [
+      {
+        name: String,
+        reference: String,
+      },
+    ],
+    default: [],
+  },
+  last_connection: {
+    type: String,
+    default: Date.now,
+  },
 });
 
 const userModel = mongoose.model(userCollection, userSchema);

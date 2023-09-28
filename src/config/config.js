@@ -11,6 +11,8 @@ dotenv.config({
   path: path.join(__dirname, ambiente == 'production' ? '../.env.production' : '../.env.development'),
 });
 
+const TYPE_DOCUMENTS = ['Identificación', 'Comprobante de domicilio', 'Comprobante de estado de cuenta'];
+
 module.exports = {
   NODE: process.env.ENVIRONMENT,
   PORT: process.env.PORT,
@@ -23,4 +25,5 @@ module.exports = {
   },
   percistence: process.env.PERCISTENCE,
   PRIVATE_KEY_JWT: process.env.PRIVATE_KEY_JWT,
+  TYPE_DOCUMENTS,
 };

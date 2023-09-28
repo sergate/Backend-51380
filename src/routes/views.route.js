@@ -11,4 +11,5 @@ router.get('/profile', viewControllers.profile);
 router.get('/logout', viewControllers.logout);
 router.get('/forgot-password', viewControllers.fortgotPassword);
 router.get('/recover-password', viewControllers.recoverPassword);
+router.get('/documents', viewControllers.getUserDocuments);
 module.exports = router;

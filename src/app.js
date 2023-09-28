@@ -21,6 +21,7 @@ const { faker } = require('@faker-js/faker');
 mongoose.set('strictQuery', false);
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const multer = require('multer');
 // const cors = require('cors');
 
 const FileStorage = FileStore(session);
@@ -76,7 +77,6 @@ server.use(passport.initialize());
 server.use(passport.session());
 // Middlewares de logger
 server.use(mdwlLogger);
-
 //rutas
 
 server.use('/', router);
