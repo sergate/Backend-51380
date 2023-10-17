@@ -27,7 +27,7 @@ const login = async (req, res) => {
 
 const profile = async (req, res) => {
   req.logger = `${req.user}`;
-  // console.log(req.user);
+  
   if (req.user) {
     res.render('profile', {
       name: req.user.firstName,

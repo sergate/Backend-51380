@@ -8,13 +8,9 @@ function Forgotpass() {
   const navigate = useNavigate();
   const forgot = async () => {
     const res = await axios
-      .post(
-        'http://localhost:8080/api/session/forgot-password',
-
-        {
-          email: Email,
-        }
-      )
+      .post('http://localhost:8080/api/session/forgot-password', {
+        email: Email,
+      })
       .catch(function (error) {
         if (error.response) {
           Swal.fire({

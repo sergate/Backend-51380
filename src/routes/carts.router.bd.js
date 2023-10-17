@@ -12,6 +12,6 @@ router.delete('/:cid/product/:pid', cartsControllerBd.deleteProductToCart);
 router.put('/:cid', cartsControllerBd.cartUpdate);
 router.put('/:cid/product/:pid', cartsControllerBd.updateQuantityProduct);
 router.delete('/:cid', cartsControllerBd.deleteToCart);
-router.get('/:cid/purchase', permisions.userPermission, cartsControllerBd.purchase);
+router.get('/:cid/purchase', cartsControllerBd.purchase);
 router.post('/payments/payment-intents', cartsControllerBd.paymentProcess);
 module.exports = router;

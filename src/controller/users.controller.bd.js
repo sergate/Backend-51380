@@ -7,7 +7,6 @@ const Mailing = require('../service/mailing.service');
 const { deleteLast } = require('../dao/mongoManager/BdUsersManager');
 const BdUsersManager = require('../dao/mongoManager/BdUsersManager');
 const mailingService = require('../service/mailing.service');
-// const userDao = require('../dao/mongoManager/BdUsersManager')
 
 const getUsers = async (req, res) => {
   try {
@@ -19,9 +18,6 @@ const getUsers = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los usuarios' });
   }
 };
-//   const users = await userService.getUser();
-//   res.json({ msg: 'ok', users });
-// };
 
 const insertUser = async (req, res) => {
   const { user } = req.body;
@@ -48,8 +44,8 @@ const deleteLast2days = async (req, res, next) => {
 
     let deleteUsers = [];
 
-    const expirationTime = moment().subtract(30, 'minutes'); // Fecha de prueba
-    // const expirationTime = moment().subtract(2, 'days'); // Fecha correcta
+    // const expirationTime = moment().subtract(30, 'minutes'); // Fecha de prueba
+    const expirationTime = moment().subtract(2, 'days'); // Fecha correcta
     let count = 0;
 
     users.forEach((user) => {

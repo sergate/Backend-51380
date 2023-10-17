@@ -11,9 +11,8 @@ const BdUsersManager = require('../dao/mongoManager/BdUsersManager');
 const { TYPE_DOCUMENTS } = require('../config/config');
 
 const sessionLogin = async (req, res) => {
-  req.logger.info(`${req.user.first_name} - updated last connection`);
+  req.logger.info(`${req.user.firstName} - updated last connection`);
   await BdUsersManager.lastConnection(req.user, new Date().toLocaleString());
-  res.send(req.user);
   res.send(req.user);
 };
 
@@ -59,9 +58,7 @@ const forgotPassword = async (req, res) => {
     mailingService.sendMail({
       to: user.email,
       subject: `Hola ${user.firstName} solicitaste un reinicio de tu contraseña`,
-      html: `<a href="
-http://localhost:8080/api/session/redirectForgotPassword/${token}
-">Haz clic aqui para cambiar tu contraseña</a>`,
+      html: `<a href="http://localhost:8080/api/session/redirectForgotPassword/${token}">Haz clic aqui para cambiar tu contraseña</a>`,
     });
     res.json({
       status: 'sucess',
@@ -70,26 +67,6 @@ http://localhost:8080/api/session/redirectForgotPassword/${token}
   } catch (error) {
     return res.send({ status: 'error', message: 'El email es inválido' });
   }
-  // const forgotPassword = async (req, res, next) => {
-  //   try {
-  //     let { email } = req.body;
-  //     const user = await BdSessionManager.getEmail({ email: email });
-  //     if (user === null) {
-  //       return res.status(404).json({ message: 'Mail no valido' });
-  //     }
-  //     let token = generateToken({ id: user.id });
-  //     mailingService.sendMail({
-  //       to: user.email,
-  //       subject: `Hola${user.firstName}`,
-  //       html: `<a href="http://localhost:8080/api/session/redirectForgotPassword/${token}">aqui</a>`,
-  //     });
-  //     res.json({
-  //       status: 'sucess',
-  //       message: `Se envio un correo de recuperacion a ${user.email}`,
-  //     });
-  //   } catch (error) {
-  //     return res.send({ status: 'error', message: 'El email es inválido' });
-  //   }
 };
 
 const redirectRecoverPassword = (req, res, next) => {

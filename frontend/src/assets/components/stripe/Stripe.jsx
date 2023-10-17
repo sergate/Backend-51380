@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import classnames from 'classnames';
 
 // Components
@@ -7,7 +7,6 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import PaymentForm from '../paymentform/PaymentForm';
 import Wrapper from '../wrapper/Wrapper';
-import ProductCard from '../productcard/ProductCard';
 
 // Services
 import PaymentService from '../../../services/paymentservice';
@@ -19,8 +18,6 @@ import { useParams } from 'react-router-dom';
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 const Stripe = () => {
-  const [userCart, setUserCart] = useState([]);
-  const [currentProduct, setCurrentProduct] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
   const { cid } = useParams();
   useEffect(() => {

@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Swal from 'sweetalert2';
+
 function Register() {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const [Firstname, setName] = useState('');
+  const navigate = useNavigate();
   const [Lastname, setLastName] = useState('');
+
   const registeruser = async () => {
     const res = await axios.post('http://localhost:8080/api/session/register/', {
       firstName: Firstname,
@@ -18,6 +22,16 @@ function Register() {
     });
     const data = res.data;
     console.log(data);
+    if (data) {
+      Swal.fire({
+        icon: 'success',
+        title: `Bienvenido ${data.firstName + ' ' + data.lastName}, ahora eres usuario de este sitio.`,
+        showConfirmButton: true,
+      });
+      setTimeout(function () {
+        navigate('/');
+      }, 3000);
+    }
   };
   return (
     <>

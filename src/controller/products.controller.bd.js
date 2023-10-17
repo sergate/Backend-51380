@@ -38,15 +38,6 @@ const addProductBd = async (req, res, next) => {
       msg: 'Este usuario no puede agregar productos',
     });
   }
-  // if (req.user === 'premium') {
-  //   product.owner = req.user.email;
-  //   const newproduct = await ProductRepository.add(product);
-  //   return res.json(newproduct);
-  // }
-  // if (!product.owner) {
-  //   const newproduct = await ProductRepository.add(product);
-  //   return res.json(newproduct);
-  // }
 };
 
 const getProductIdBd = async (req, res) => {

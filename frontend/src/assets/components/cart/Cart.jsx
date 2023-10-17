@@ -3,7 +3,6 @@ import axios from 'axios';
 import Button from 'react-bootstrap/esm/Button';
 
 import styles from './cart.module.css';
-// import PaymentForm from '../stripe/Components/PaymentForm';
 
 import Stripe from '../stripe/Stripe';
 
@@ -11,7 +10,7 @@ function Cart() {
   const [cart, setCart] = useState(null);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isPurchasing, setIsPurchasing] = useState(false);
+  const [isPurchasing] = useState(false);
 
   const handlerRemoveItem = async (pid) => {
     const { cart: cid } = JSON.parse(localStorage.getItem('usuarios'));
@@ -47,8 +46,9 @@ function Cart() {
     const fetchCart = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(`http://localhost:8080/api/cartsBd/${cid}`); // Reemplaza 'cid' por el ID correcto del carrito que deseas obtener
+        const response = await axios.get(`http://localhost:8080/api/cartsBd/${cid}`);
         setCart(response.data);
+        console.log(response);
       } catch (error) {
         console.log(error);
         setError(true);
