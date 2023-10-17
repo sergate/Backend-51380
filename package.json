@@ -1,7 +1,7 @@
 {
-  "name": "desafio-11",
+  "name": "proyecto-final",
   "version": "1.0.0",
-  "description": "Desafio 11 (Modulos de testing)",
+  "description": "Proyecto Final Curso BackEnd",
   "main": "index.js",
   "scripts": {
     "start": "node ./src/app.js",
