@@ -29,5 +29,5 @@ router.get('/current', permisions.adminPermission, viewSession.current);
 router.post('/:uid/documents', saveDocs, viewSession.uploadDocs);
 
 router.post('/:uid/reviewDocuments', reviewDocs, viewSession.AreDocumentsRepeated);
-// router.get('/:userId/last-connection', viewSession.lastConnection);
+
 module.exports = router;

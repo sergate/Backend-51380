@@ -81,31 +81,6 @@ server.use(mdwlLogger);
 
 server.use('/', router);
 
-// server.get('/operacion-facil', (req, res) => {
-//   let sum = 0;
-//   for (let i = 0; i < 10000; i++) {
-//     sum += i;
-//   }
-//   res.send(sum);
-// });
-
-// server.get('/operacion-dificil', (req, res) => {
-//   let sum = 0;
-//   for (let i = 0; i < 10000000000; i++) {
-//     sum += i;
-//   }
-//   res.send(sum);
-// });
-
-// server.get('/crate-user', (req, res) => {
-//   res.json({
-//     firstName: faker.name.firstName(),
-//     lastName: faker.name.lastName(),
-//     email: faker.internet.username(),
-//     password: faker.internet.password(),
-//   });
-// });
- 
 const test = async () => {
   await mongoose.connect(mongoURL);
   console.log('Su conexion a la base fue exitosa');

@@ -1,6 +1,6 @@
 const { hash } = require('bcrypt');
 const DTOsUser = require('../dao/DTOs/user.dto');
-const userModel = require('../dao/models/users.model');
+const UsersModel = require('../dao/models/users.model');
 const User = require('../dao/models/users.model');
 const BdSessionManager = require('../dao/mongoManager/BdSessionManager');
 const mailingService = require('../service/mailing.service');

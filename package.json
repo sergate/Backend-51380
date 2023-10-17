@@ -26,6 +26,7 @@
     "faker-js": "^1.0.0",
     "jsonwebtoken": "^9.0.0",
     "mocha": "^10.2.0",
+    "moment": "^2.29.4",
     "mongo-store": "^0.0.2",
     "mongoose": "^6.9.0",
     "mongoose-paginate-v2": "^1.7.1",
