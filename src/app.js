@@ -11,7 +11,6 @@ const FileStore = require('session-file-store');
 const mongoconnect = require('connect-mongo');
 const mongoose = require('mongoose');
 const productModel = require('./dao/models/products.model');
-// const { PORT } = require('./utils/constants');
 const { init } = require('./dao/models/users.model');
 const { initPassaport } = require('./utils/passport.config');
 const passport = require('passport');
@@ -26,7 +25,6 @@ const cors = require('cors');
 const PORT = process.env.PORT || 8080;
 
 const FileStorage = FileStore(session);
-// const httpServer = server.listen(8080, () => {});
 
 const httpServer = server.listen(PORT, () => console.log('Servidor listo escuchando en puerto ${PORT}'));
 
@@ -34,7 +32,7 @@ const httpServer = server.listen(PORT, () => console.log('Servidor listo escucha
 server.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: 'https://ecom-backend-r9ty.onrender.com',
   })
 );
 
@@ -68,7 +66,6 @@ server.use(express.urlencoded({ extended: true }));
 server.use(
   session({
     store: mongoconnect.create({
-      // mongoUrl: mongoURL,
       mongoUrl: process.env.MONGOURL,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 60 * 60,
