@@ -23,6 +23,8 @@ const loginRegister = async (req, res) => {
   const dtoUser = new DTOsUser(req.user);
   req.session.user = dtoUser;
 
+  console.log('dtoUser', dtoUser);
+
   res.send(dtoUser);
 };
 
@@ -46,7 +48,7 @@ const current = async (req, res) => {
   res.send(req.user);
 };
 
-const forgotPassword = async (req, res, next) => {
+const forgotPassword = async (req, res) => {
   try {
     let { email } = req.body;
     const user = await BdSessionManager.getEmail({ email: email });
@@ -56,8 +58,10 @@ const forgotPassword = async (req, res, next) => {
     let token = generateToken({ id: user.id });
     mailingService.sendMail({
       to: user.email,
-      subject: `Hola${user.firstName}`,
-      html: `<a href="http://localhost:8080/api/session/redirectForgotPassword/${token}">aqui</a>`,
+      subject: `Hola ${user.firstName} solicitaste un reinicio de tu contraseña`,
+      html: `<a href="
+http://localhost:8080/api/session/redirectForgotPassword/${token}
+">Haz clic aqui para cambiar tu contraseña</a>`,
     });
     res.json({
       status: 'sucess',
@@ -66,6 +70,26 @@ const forgotPassword = async (req, res, next) => {
   } catch (error) {
     return res.send({ status: 'error', message: 'El email es inválido' });
   }
+  // const forgotPassword = async (req, res, next) => {
+  //   try {
+  //     let { email } = req.body;
+  //     const user = await BdSessionManager.getEmail({ email: email });
+  //     if (user === null) {
+  //       return res.status(404).json({ message: 'Mail no valido' });
+  //     }
+  //     let token = generateToken({ id: user.id });
+  //     mailingService.sendMail({
+  //       to: user.email,
+  //       subject: `Hola${user.firstName}`,
+  //       html: `<a href="http://localhost:8080/api/session/redirectForgotPassword/${token}">aqui</a>`,
+  //     });
+  //     res.json({
+  //       status: 'sucess',
+  //       message: `Se envio un correo de recuperacion a ${user.email}`,
+  //     });
+  //   } catch (error) {
+  //     return res.send({ status: 'error', message: 'El email es inválido' });
+  //   }
 };
 
 const redirectRecoverPassword = (req, res, next) => {

@@ -12,17 +12,27 @@ class UserService {
     this.dao = dao;
   }
 
-  getUser = (email, firstName, role) => userModel.find(email, firstName, role);
+  getUser(email, firstName, role) {
+    return userModel.find(email, firstName, role);
+  }
 
   // getUser =() => this.dao.get()
 
-  insertUser = (user) => this.dao.insert(user);
+  insertUser(user) {
+    return this.dao.insert(user);
+  }
 
-  updateUser = (user, id) => this.dao.update(user, id);
+  updateUser(user, id) {
+    return this.dao.update(user, id);
+  }
 
-  delete = (id) => this.dao.delete(id);
+  delete(id) {
+    return this.dao.delete(id);
+  }
 
-  deleteLast = (last_connection) => this.dao.deleteLast(last_connection);
+  deleteLast(last_connection) {
+    return this.dao.deleteLast(last_connection);
+  }
 }
 
 module.exports = UserService;

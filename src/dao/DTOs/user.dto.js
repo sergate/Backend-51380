@@ -20,6 +20,7 @@ class DTOsUser {
     this.role = user.role;
     this.last_connection = user.last_connection;
     this.documents = user.documents;
+    this.cart = user.cart;
   }
 }
 

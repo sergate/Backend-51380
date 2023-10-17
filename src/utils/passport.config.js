@@ -69,6 +69,7 @@ const initPassaport = () => {
 
           const isVadidPassword = await comparePassword(password, user.password);
           if (user && isVadidPassword) {
+            console.log("Se hizo correctamente la sesion")
             done(null, user);
           } else {
             done(null, false);

@@ -8,7 +8,9 @@ class BdUserManager {
 
   update = (user, id) => UsersModel.findByIdAndUpdate(id, user);
 
-  delete = (id) => UsersModel.findByIdAndDelete(id);
+  delete = (id) => {
+    return UsersModel.findByIdAndDelete(id);
+  };
 
   lastConnection = async (user, lastconnection) => {
     user.last_connection = lastconnection;

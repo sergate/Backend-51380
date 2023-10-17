@@ -1,33 +1,58 @@
 import { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+
+// Components
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/esm/Button';
+import PaginationComponent from '../pagination/pagination';
+
+// Styles
 import '../../styles/CardsStyles.css';
+import styles from './homebody.module.css';
 
 function Home() {
-  const [data, setdata] = useState([]);
+  const [data, setdata] = useState(null);
+  const [selectedPage, setSelectedPage] = useState(2);
+  const { cart } = JSON.parse(localStorage.getItem('usuarios'));
+
+  const addToCart = async (cid, pid) => {
+    await axios.post(`http://localhost:8080/api/cartsBd/${cid}/product/${pid}`);
+  };
+
   useEffect(() => {
-    fetch('http://localhost:8080/api/productsBd/', {
+    fetch(`http://localhost:8080/api/productsBd/?${selectedPage ? `page=${selectedPage}` : ''}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
       .then((data) => {
-        setdata(data.payload);
+        setdata(data);
       });
-  }, []);
+  }, [selectedPage]);
+
+  console.log(data?.payload);
+
   return (
-    <div>
-      {data.map((element) => (
-        <Card className="card">
-          <Card.Img variant="top" src={element.thumbnail} />
-          <Card.Body>
-            <Card.Title>{element.title}</Card.Title>
-            <Card.Text>{element.description}</Card.Text>
-            <Card.Text>{element.price}</Card.Text>
-            <Button variant="primary">Agregar al carrito</Button>
-          </Card.Body>
-        </Card>
-      ))}
+    <div className={styles.container}>
+      <div className={styles['products-container']}>
+        {data &&
+          data.payload.map((element) => (
+            <Card className="card" key={element._id}>
+              <Card.Img variant="top" src={element.thumbnail} />
+              <Card.Body>
+                <div>
+                  <Card.Title>{element.title}</Card.Title>
+                  <Card.Text>{element.description}</Card.Text>
+                </div>
+                <div>
+                  <Card.Text className="card-price">{element.price}</Card.Text>
+                  <Button onClick={() => addToCart(cart, element._id)}>Agregar Producto al carrito</Button>
+                </div>
+              </Card.Body>
+            </Card>
+          ))}
+      </div>
+      <div className={styles.paginate}>{data && <PaginationComponent currentPage={data.page} totalPages={data.totalPages} onPageChange={(newPage) => setSelectedPage(newPage)} />}</div>
     </div>
   );
 }

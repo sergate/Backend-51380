@@ -19,6 +19,9 @@ const cartsSchema = new mongoose.Schema({
           type: Number,
           default: 1,
         },
+        title: {
+          type: String,
+        },
         id: {
           type: String,
         },
@@ -28,8 +31,9 @@ const cartsSchema = new mongoose.Schema({
   },
 });
 
-cartsSchema.pre('findById', function () {
+cartsSchema.post('find', function () {
   this.populate('products.product');
+  console.log('hola mundo');
 });
 
 const cartsModel = mongoose.model('carts', cartsSchema);

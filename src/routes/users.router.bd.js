@@ -6,10 +6,10 @@ const { adminPermission } = require('../middlewares/permissions');
 
 const userRouter = Router();
 
-userRouter.get('/', getUsers);
+userRouter.get('/', adminPermission, getUsers);
 userRouter.post('/', insertUser);
 userRouter.put('/', updateUser);
-userRouter.delete('/', deleteUser);
+userRouter.delete('/:id', deleteUser);
 userRouter.delete('/deletelast', adminPermission, deleteLast2days);
 // userRouter.post('/premium/:uid', sessionController.updateRole);
 module.exports = userRouter;

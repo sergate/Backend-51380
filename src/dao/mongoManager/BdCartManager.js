@@ -1,3 +1,4 @@
+const { updateQuantityProduct } = require('../../controller/carts.controller.bd');
 const cartsModel = require('../models/carts.model');
 const ticketModel = require('../models/ticket.model');
 const { faker } = require('@faker-js/faker');
@@ -19,7 +20,7 @@ class BdCartsManager {
 
   getCartsId = async (id) => {
     try {
-      const cart = await cartsModel.findById(id);
+      const cart = await cartsModel.findById(id).populate('products.product');
       return cart;
     } catch (error) {
       return { msg: 'No se pueden traer los carritos' };
@@ -44,16 +45,41 @@ class BdCartsManager {
     }
   };
 
-  addProductToCarts = async (cid, product, user) => {
+  addProductToCarts = async (cid, product) => {
     const cart = await cartsModel.findById(cid);
-    console.log(JSON.stringify(product));
-    const resultado = cart.products.findIndex((prod) => prod.id == product.id);
-    console.log(resultado);
-    if (resultado === -1) {
+
+    const productIndex = cart.products.findIndex((prod) => prod.product.toString() === product.id);
+
+    console.log('productIndex', productIndex);
+    if (productIndex === -1) {
+      const newCart = {
+        priceTotal: cart.priceTotal + product.price,
+        quantityTotal: cart.quantityTotal + 1,
+        products: [...cart.products, ...[{ product: product.id }]],
+        id: cart.id,
+      };
+      console.log({ cid, product, newCart });
+      const result = await this.updateCartProducts(newCart);
+      console.log({ result });
     } else {
+      const newCart = {
+        priceTotal: cart.priceTotal + product.price,
+        quantityTotal: cart.quantityTotal + 1,
+        products: cart.products.map((cartProduct) =>
+          cartProduct.product.toString() === product.id
+            ? {
+                ...cartProduct,
+                quantity: ++cartProduct.quantity,
+              }
+            : cartProduct
+        ),
+        id: cart.id,
+      };
+      console.log({ cid, product, newCart });
+      const result = await this.updateCartProducts(newCart);
+      console.log({ result });
     }
   };
-
   updateCartProducts = async (cart) => {
     const cartUpdated = await cartsModel.findByIdAndUpdate(cart.id, cart, { new: true });
     return cartUpdated;
@@ -129,42 +155,5 @@ class BdCartsManager {
     return ticketCreate;
   };
 }
-// purchase = async (cid, purchaser) => {
-//   try {
-//     const productsInCart = await this.getById(cid);
-
-//     if (productsInCart.error)
-//       return {
-//         status: 404,
-//         error: `Cart con id ${cid} no encontrado`,
-//       };
-
-//     const existProductOutStock = Boolean(productsInCart.find((product) => product.pid.stock < product.quantity));
-
-//     if (existProductOutStock) return { status: 400, message: 'Exist product out stock' };
-
-//     let totalAmount = 0;
-
-//     for (const product of productsInCart) {
-//       const newStock = product.pid.stock - product.quantity;
-//       totalAmount += product.pid.price;
-//       await dbpm.putById(product.pid._id, { stock: newStock });
-//     }
-
-//     const ticket = await ticketModel.create({
-//       code: faker.database.mongodbObjectId(),
-//       purchaseDateTime: new Date().toLocaleString(),
-//       amount: totalAmount,
-//       purchaser: 'yo',
-//     });
-//     return { payload: { ticket, productsInCart } };
-//   } catch (error) {
-//     console.log(error);
-//     return {
-//       status: 500,
-//       error: `Un error ocurrio al realizar el purchase`,
-//     };
-//   }
-// };
 
 module.exports = new BdCartsManager();
