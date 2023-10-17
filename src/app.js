@@ -66,7 +66,7 @@ server.use(express.urlencoded({ extended: true }));
 server.use(
   session({
     store: mongoconnect.create({
-      mongoUrl: process.env.MONGOURL,
+      mongoUrl: mongoURL,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 60 * 60,
     }),
