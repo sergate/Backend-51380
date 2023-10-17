@@ -242,6 +242,10 @@ const purchase = async (req, res) => {
       msg: 'No se pudo crear Ticket',
     });
   }
+  mailingService.sendMail({
+    to: user.email,
+    subject: `Hola ${user.firstName} gracias por la compra, en los proximos 10 dias hábiles estaremos contactandote para coordinar la entrega. Recuerda revisar la bandeja de spam`,
+  });
   return res.json({
     msg: 'Ticket Creado con Exito',
     payload: newTicket,
