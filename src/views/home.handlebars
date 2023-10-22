@@ -22,7 +22,7 @@
           <h2 class='card-text text-center'>$ {{price}}</h2>
           <p class='card-text text-center'>Cantidad: {{stock}}</p>
           <div class='d-flex justify-content-center'>
-            <button type='button' class='btn btn-primary'>Agregar al carrito</button>
+            <button onclick="addProductToCart(`{{this.id}}`)" type='button' class='btn btn-primary'>Agregar al carrito</button>
           </div>
         </div>
       </div>
